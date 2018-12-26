@@ -6,9 +6,10 @@
 <!-- default file list end -->
 # How to filter a LookUpEdit in one column based on the value of another column
 
+This example illustrates how to filter [LookUpEdit](https://docs.devexpress.com/WPF/8862/controls-and-libraries/data-editors/editor-types/lookupedit) items based on the value of another column.
 
-<p>This example illustrates how to filter LookUpEdit item source values in one column based on the value of another column. This functionality can be implemented only when a filtered LookUpEdit is introduced using a <strong>cell template</strong>. In this case, every cell has an independent LookUpEdit editor, and we can manipulate its item source. The item source is filtered in the <strong>TableView.ShownEditor</strong> event handler. This event is raised when a cell gets focus, and its editor becomes active, so it is the best place to filter the item source.</p>
+To provide this functionality, we show cell editors using the [CellTemplate](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.ColumnBase.CellTemplate) property. Unlike [EditSettings](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.ColumnBase.EditSettings), this property allows you to display independent editors with different [ItemsSource](https://docs.devexpress.com/WPF/DevExpress.Xpf.Editors.LookUpEditBase.ItemsSource) collections.
 
-<br/>
+The **ItemsSource** collection is filtered in the [ShownEditor](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.GridViewBase.ShownEditor) event handler and is set to its original value in the [HiddenEditor](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.GridViewBase.HiddenEditor) event handler.
 
-
+The last step - setting **ItemsSource** to the original value - is required since **GridControl** creates visual elements only for visible rows and will re-use cell editors on scrolling rows. Since editors with the [DisplayMember](https://docs.devexpress.com/WPF/DevExpress.Xpf.Editors.LookUpEditBase.DisplayMember)/[ValueMember](https://docs.devexpress.com/WPF/DevExpress.Xpf.Editors.LookUpEditBase.ValueMember) property set show only values from the **ItemsSource** collection, values in other cells may disappear if you skip this step.
