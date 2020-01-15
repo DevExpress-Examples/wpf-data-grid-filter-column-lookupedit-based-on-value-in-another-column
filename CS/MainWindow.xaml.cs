@@ -6,8 +6,6 @@ using System.Windows;
 
 namespace WPFDataGridApp13 {
     public partial class MainWindow : Window {
-        LookUpEditBase Editor;
-
         public ObservableCollection<City> Cities { get; private set; }
         public ObservableCollection<Country> Countries { get; private set; }
         public ObservableCollection<SampleData> Data { get; private set; }
@@ -51,24 +49,17 @@ namespace WPFDataGridApp13 {
         void OnTableViewShownEditor(object sender, EditorEventArgs e) {
             if (e.Column.FieldName != "CityId")
                 return;
-            Editor = e.Editor as LookUpEditBase;
-            if (Editor == null)
+            LookUpEditBase editor = e.Editor as LookUpEditBase;
+            if (editor == null)
                 return;
-            TableView view = (TableView)sender;
+            TableView view = (TableView)e.Source;
             int countryId = (int)view.Grid.GetCellValue(e.RowHandle, "CountryId");
-            Editor.ItemsSource = Cities.Where(city => city.CountryId == countryId).ToList();
-        }
-
-        void TableVieHiddenEditor(object sender, EditorEventArgs e) {
-            if (Editor == null)
-                return;
-            Editor.ItemsSource = Cities;
-            Editor = null;
+            editor.ItemsSource = Cities.Where(city => city.CountryId == countryId).ToList();
         }
 
         void TableViewCellValueChanged(object sender, CellValueChangedEventArgs e) {
             if (e.Column.FieldName == "CountryId") {
-                SampleData sd = e.Row as SampleData;
+                SampleData sd = (SampleData)e.Row;
                 sd.CityId = -1;
             }
         }
