@@ -48,10 +48,6 @@
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Printing.v13.1.Core">
-      <Private>True</Private>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
     <Reference Include="DevExpress.Xpf.Printing.v13.1">
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
