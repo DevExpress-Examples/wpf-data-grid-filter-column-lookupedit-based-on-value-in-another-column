@@ -3,30 +3,48 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:my="clr-namespace:WPFDataGridApp13"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Height="270"
         mc:Ignorable="d"
         Title="MainWindow"
         Width="532">
-	<Grid>
-		<dxg:GridControl ItemsSource="{Binding Data}">
-			<dxg:GridControl.Columns>
-				<dxg:GridColumn FieldName="CountryId" Header="Country">
-					<dxg:GridColumn.EditSettings>
-						<dxg:LookUpEditSettings ItemsSource="{Binding Countries}" ValueMember="CountryId" DisplayMember="CountryName" />
-					</dxg:GridColumn.EditSettings>
-				</dxg:GridColumn>
-				<dxg:GridColumn FieldName="CityId" Header="City">
-					<dxg:GridColumn.CellTemplate>
-						<DataTemplate>
-							<dxg:LookUpEdit Name="PART_Editor" ItemsSource="{Binding View.DataContext.Cities}" ValueMember="CityId" DisplayMember="CityName" />
-						</DataTemplate>
-					</dxg:GridColumn.CellTemplate>
-				</dxg:GridColumn>
-			</dxg:GridControl.Columns>
-			<dxg:GridControl.View>
-                <dxg:TableView AutoWidth="True" CellValueChanged="TableViewCellValueChanged" ShownEditor="OnTableViewShownEditor" HiddenEditor="TableVieHiddenEditor"/>
+    <Grid>
+        <dxg:GridControl ItemsSource="{Binding Data}">
+            <dxg:GridControl.Columns>
+                <dxg:GridColumn FieldName="CountryId" Header="Country">
+                    <dxg:GridColumn.EditSettings>
+                        <dxg:LookUpEditSettings ItemsSource="{Binding Countries}" ValueMember="CountryId" DisplayMember="CountryName" />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+                <dxg:GridColumn FieldName="CityId" Header="City">
+                    <dxg:GridColumn.EditSettings>
+                        <dxg:LookUpEditSettings ItemsSource="{Binding Cities}" ValueMember="CityId" DisplayMember="CityName"/>
+                    </dxg:GridColumn.EditSettings>
+                    <dxg:GridColumn.CellEditTemplate>
+                        <DataTemplate>
+                            <dxg:LookUpEdit Name="PART_Editor"
+                                            ItemsSource="{Binding View.DataContext.Cities}" AutoPopulateColumns="False"
+                                            ValueMember="CityId" DisplayMember="CityName">
+                                <dxg:LookUpEdit.PopupContentTemplate>
+                                    <ControlTemplate>
+                                        <dxg:GridControl Name="PART_GridControl">
+                                            <dxg:GridControl.Columns>
+                                                <dxg:GridColumn FieldName="CityId"/>
+                                                <dxg:GridColumn FieldName="CityName"/>
+                                            </dxg:GridControl.Columns>
+                                            <dxg:GridControl.View>
+                                                <dxg:TableView AutoWidth="True"/>
+                                            </dxg:GridControl.View>
+                                        </dxg:GridControl>
+                                    </ControlTemplate>
+                                </dxg:LookUpEdit.PopupContentTemplate>
+                            </dxg:LookUpEdit>
+                        </DataTemplate>
+                    </dxg:GridColumn.CellEditTemplate>
+                </dxg:GridColumn>
+            </dxg:GridControl.Columns>
+            <dxg:GridControl.View>
+                <dxg:TableView AutoWidth="True" CellValueChanged="TableViewCellValueChanged" ShownEditor="OnTableViewShownEditor"/>
             </dxg:GridControl.View>
         </dxg:GridControl>
     </Grid>
